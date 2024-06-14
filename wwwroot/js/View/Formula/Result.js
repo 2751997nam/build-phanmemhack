@@ -8,7 +8,7 @@
     sumResultLose = 0,
     axisY = 25,
     axisLine = 25,
-    axisX = 0,
+    axisX = 1,
     appCode = resultComponent.find('#appCode').val(),
     roomCode = resultComponent.find('#roomCode').val(),
     userName = $($('.username')[0]).text(),
@@ -16,6 +16,8 @@
 let countDownSec = 20;
 let coundDownInterval = null;
 const enableCountDown = checkEnableCountDown();
+let maintainInterval = null;
+let maintainCountdown = 5 * 60 * 1000;
 
 resultComponent.find('.exit-room').on('click', function () {
     var appId = $('#appId').val(),
@@ -74,6 +76,14 @@ function resetCountDown() {
             $("#countdown-sec").html(`${countDownSec}s`);
         }
     }, 1000);
+    resetMaintain();
+}
+
+function resetMaintain() {
+    clearTimeout(maintainInterval);
+    maintainInterval = setTimeout(() => {
+        showMaintainAlert();
+    }, maintainCountdown)
 }
 
 function clearCountDown() {
@@ -404,9 +414,16 @@ function genHtmlTableTBLStack(lose, isWin, loopIndex) {
     return htmlTr;
 }
 
+function randomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; 
+}
+
 function handleBoardResult(isMatchPredict, resultValue) {
     let colorBoard = "";
-
+    let height = 1;
+    let operator = 'sumb';
     if (resultValue == 't' && appCode.indexOf('bcr') > 0) {
         // nếu kq là T thì gán luôn màu
         colorBoard = "rgb(40, 167, 69)";
@@ -416,56 +433,68 @@ function handleBoardResult(isMatchPredict, resultValue) {
         if (axisY == axisLine) {
             axisY--;
         }
-        colorBoard = "rgb(204, 255, 0)";
+        colorBoard = "rgb(255 229 0)";
+        height = randomInt(3, 6);
+        operator = 'sub';
     }
     else {
         axisY++;
         if (axisY == axisLine) {
             axisY++;
         }
-        colorBoard = "red";
+        colorBoard = "#ff00cc";
+        height = randomInt(3, 6);
     }
 
     let axisYCurrent = axisY;
 
     // xử lý mở rộng chiều rộng chiều dài đồ thị nếu bị tràn
-    if (!document.getElementById("graph_tbl").rows[axisY]) {
-        // count td của dòng dầu
-        let countTd = resultComponent.find("#graph_tbl tbody tr:first-child td").length,
-            htmlTr = '';
-        for (var i = 0; i < countTd; i++) {
-            htmlTr += '<td></td>'
-        }
-        if (htmlTr) {
-            htmlTr = `<tr>${htmlTr}</tr>`;
-            if (axisY < axisLine) {
-                resultComponent.find("#graph_tbl tbody").prepend(htmlTr);
+    if (!document.getElementById("graph_tbl").rows[axisY + height]) {
+        for (let row = 0; row < height; row++) {
+            // count td của dòng dầu
+            let countTd = resultComponent.find("#graph_tbl tbody tr:first-child td").length,
+                htmlTr = '';
+            for (var i = 0; i < countTd; i++) {
+                htmlTr += '<td></td>'
+            }
+            if (htmlTr) {
+                htmlTr = `<tr>${htmlTr}</tr>`;
+                if (axisY < axisLine) {
+                    resultComponent.find("#graph_tbl tbody").prepend(htmlTr);
+                }
+                else {
+                    resultComponent.find("#graph_tbl tbody").append(htmlTr);
+                }
+            }
+            if (axisY <= 0) {
+                axisY = 0;
+                axisYCurrent = 0;
             }
             else {
-                resultComponent.find("#graph_tbl tbody").append(htmlTr);
+                axisYCurrent = axisY - 1;
             }
         }
-        if (axisY <= 0) {
-            axisY = 0;
-            axisYCurrent = 0;
-        }
-        else {
-            axisYCurrent = axisY - 1;
-        }
+
     }
 
     if (document.getElementById("graph_tbl").rows[axisYCurrent] && !document.getElementById("graph_tbl").rows[axisYCurrent].cells[axisX]) {
         // nếu axistX hết thì tăng bên phải
         // quét từng tr rồi thêm 1 td
-        let trListElement = resultComponent.find("#graph_tbl tbody tr")
+        let trListElement = resultComponent.find("#graph_tbl tbody tr");
+        let addNumbers = axisX - ($(trListElement[0]).find('td').length - 1);
         for (var i = 0; i < trListElement.length; i++) {
-            $(resultComponent.find("#graph_tbl tbody tr")[i]).append('<td></td>')
+            for (let j = 0; j < addNumbers; j++) {
+                $(resultComponent.find("#graph_tbl tbody tr")[i]).append('<td></td>')
+            }
         }
     }
 
     if (colorBoard && document.getElementById("graph_tbl").rows[axisYCurrent]) {
-        document.getElementById("graph_tbl").rows[axisYCurrent].cells[axisX].style.backgroundColor = colorBoard;
-        axisX++;
+        for (let i = 0; i <= height; i++) {
+            let currentY = operator == 'sumb' ? axisYCurrent + i : axisYCurrent - i;
+            document.getElementById("graph_tbl").rows[currentY].cells[axisX].style.backgroundColor = colorBoard;
+        }
+        axisX += 2;
     }
 }
 

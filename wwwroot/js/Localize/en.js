@@ -71,5 +71,7 @@
     "BetMoneyMustOverZero": "The bet amount must be greater than 0",
     "SomeRecordExisted": "Successfully added some parts, some records already exist",
     "InsertAll": "Successfully inserted all records",
-    "FileEmpty": "Empty file or incorrect format"
+    "FileEmpty": "Empty file or incorrect format",
+    "Maintain": "Maintain",
+    "TableMaintain": "Table is in maintainent"
 };

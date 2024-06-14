@@ -68,8 +68,10 @@
     "DeleteMessageTemplateSuccess": "成功删除消息模板。",
     "UpdateMessageTemplateSuccess": "成功更新消息模板。",
     "UpdateChatConfigSuccess": "成功更新聊天配置。",
-    "BetMoneyMustOverZero": "จำนวนเงินเดิมพันต้องมากกว่า 0",
+    "BetMoneyMustOverZero": "投注金额必须大于0",
     "SomeRecordExisted": "成功添加了一些部分，一些记录已经存在",
     "InsertAll": "成功插入所有记录",
-    "FileEmpty": "文件为空或格式不正确"
+    "FileEmpty": "文件为空或格式不正确",
+    "Maintain": "维持",
+    "TableMaintain": "表正在维护中",
 }
