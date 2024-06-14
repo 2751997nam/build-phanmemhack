@@ -1,0 +1,102 @@
+﻿body {
+    background: black;
+}
+
+nav {
+    padding: 1% 9% !important;
+}
+
+    nav a {
+        color: white !important;
+    }
+
+        nav a:hover {
+            text-decoration: none;
+        }
+
+.modal-content {
+    background-color: rgba(0,0,0,0.9) !important;
+    border: 3px solid green !important;
+}
+
+main {
+    background-color: #2d2d2d;
+    color: white;
+    font-family: Raleway, sans-serif;
+}
+
+main {
+    background-color: #2d2d2d;
+    color: white;
+}
+
+#upper-section a {
+    color: #adaaaa !important;
+}
+
+    #upper-section a:hover {
+        color: #ff621d !important;
+        text-decoration: none;
+    }
+
+.credit-buttons > button {
+    color: white;
+    background-color: #CD992D;
+}
+
+button > a:hover {
+    text-decoration: none !important;
+}
+
+h3 > a:hover {
+    text-decoration: none !important;
+}
+
+.pic-and-text {
+    font-family: Raleway, sans-serif;
+    display: flex;
+}
+
+    .pic-and-text h3 {
+        font-weight: 600;
+    }
+
+#iframe-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.iframe-container {
+    width: 500px;
+    height: 260px;
+}
+
+    .iframe-container > iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+/*media querries*/
+
+@media (max-width: 992px) {
+    #iframe-div {
+        display: block;
+    }
+
+    .iframe-container {
+        width: 85%;
+        height: 200px;
+    }
+
+    .pic-and-text {
+        display: block;
+    }
+
+        .pic-and-text > div {
+            width: 100% !important;
+        }
+
+        .pic-and-text > img {
+            width: 100% !important;
+        }
+}

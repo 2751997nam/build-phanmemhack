@@ -1,0 +1,134 @@
+{
+  "MemberDTO": {
+    "FileName": "member.xlsx",
+    "ExportParams": [
+      {
+        "Field": "SortOrder",
+        "TitleVI": "#",
+        "TitleEN": "#",
+        "TitleCN": "#",
+        "TitleTH": "#",
+        "IsUseResource": false
+      },
+      {
+        "Field": "UserName",
+        "TitleVI": "Tên Tài khoản",
+        "TitleEN": "User Name",
+        "TitleCN": "帐号",
+        "TitleTH": "ชื่อผู้ใช้",
+        "IsUseResource": false
+      },
+      {
+        "Field": "FullName",
+        "TitleVI": "Họ tên",
+        "TitleEN": "Full Name",
+        "TitleCN": "姓名",
+        "TitleTH": "ชื่อและนามสกุล",
+        "IsUseResource": false
+      },
+      {
+        "Field": "Email",
+        "TitleVI": "Email",
+        "TitleEN": "Email",
+        "TitleCN": "Email",
+        "TitleTH": "Email",
+        "IsUseResource": false
+      },
+      {
+        "Field": "PhoneNumber",
+        "TitleVI": "Phone",
+        "TitleEN": "Phone",
+        "TitleCN": "Phone",
+        "TitleTH": "Phone",
+        "IsUseResource": false
+      },
+      {
+        "Field": "IPAddress",
+        "TitleVI": "IP",
+        "TitleEN": "IP",
+        "TitleCN": "IP",
+        "TitleTH": "IP",
+        "IsUseResource": false
+      },
+      {
+        "Field": "Coin",
+        "TitleVI": "Tín Dụng",
+        "TitleEN": "Credit",
+        "TitleCN": "信用",
+        "TitleTH": "เครดิต",
+        "IsUseResource": false
+      },
+      {
+        "Field": "RoleCode",
+        "TitleVI": "Thể loại",
+        "TitleEN": "User Type",
+        "TitleCN": "用户类型",
+        "TitleTH": "ประเภทผู้ใช้",
+        "IsUseResource": true,
+        "EnumResouce": [
+          {
+            "Enum": "Customer",
+            "EnumVI": "Khách hàng",
+            "EnumEN": "Khách hàng",
+            "EnumCN": "Khách hàng",
+            "EnumTH": "Khách hàng"
+          },
+          {
+            "Enum": "SuperAdmin",
+            "EnumVI": "Quản trị viên cấp cao",
+            "EnumEN": "Quản trị viên cấp cao",
+            "EnumCN": "Quản trị viên cấp cao",
+            "EnumTH": "Quản trị viên cấp cao"
+          },
+          {
+            "Enum": "Admin",
+            "EnumVI": "Quản trị viên",
+            "EnumEN": "Quản trị viên",
+            "EnumCN": "Quản trị viên",
+            "EnumTH": "Quản trị viên"
+          }
+        ]
+      },
+      {
+        "Field": "LastLogin",
+        "TitleVI": "Lần Đăng nhập cuối",
+        "TitleEN": "Last Login",
+        "TitleCN": "最后登录",
+        "TitleTH": "เข้าสู่ระบบครั้งล่าสุด",
+        "IsUseResource": false
+      },
+      {
+        "Field": "CreatedDate",
+        "TitleVI": "Ngày tạo ra",
+        "TitleEN": "Created Date",
+        "TitleCN": "创建日期",
+        "TitleTH": "วันที่สร้าง",
+        "IsUseResource": false
+      },
+      {
+        "Field": "Status",
+        "TitleVI": "Tình trạng",
+        "TitleEN": "Status",
+        "TitleCN": "状态",
+        "TitleTH": "สถานะ",
+        "IsUseResource": true,
+        "EnumResouce": [
+          {
+            "Enum": "Actived",
+            "EnumVI": "Hoạt động",
+            "EnumEN": "Hoạt động",
+            "EnumCN": "Hoạt động",
+            "EnumTH": "Hoạt động"
+          },
+          {
+            "Enum": "Deleted",
+            "EnumVI": "Khóa",
+            "EnumEN": "Khóa",
+            "EnumCN": "Khóa",
+            "EnumTH": "Khóa"
+          }
+        ]
+      }
+    ]
+  }
+}

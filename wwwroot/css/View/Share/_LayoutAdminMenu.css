@@ -1,0 +1,241 @@
+﻿html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    padding-top: 4.5rem;
+    margin-bottom: 4.5rem;
+    background-image: url(/image/BG.png);
+}
+
+.navbar {
+    padding: 0 0 10px 20px;
+    min-height: 40px;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url('/image/Top_Bar.png'), url('/image/Top_Bar.png');
+    background-repeat: no-repeat, no-repeat;
+    background-size: 170px 47px, 100% 100%;
+    padding: unset !important;
+}
+
+.navbar-brand {
+    padding: 0;
+    height: 40px;
+    line-height: 40px;
+}
+
+.navlogo {
+    height: 100%;
+}
+
+.nav-link {
+    margin-bottom: -15px;
+}
+
+    .nav-link:hover {
+        background-color: rgba(65, 105, 225, 0.3);
+        transition: all 0.4s;
+    }
+
+.nav-link-collapse:after {
+    float: right;
+    content: '\f067';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
+.nav-link-show:after {
+    float: right;
+    content: '\f068';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
+.nav-item ul.nav-second-level {
+    padding-left: 0;
+}
+
+    .nav-item ul.nav-second-level > .nav-item {
+        padding-left: 0;
+    }
+
+@media (min-width: 992px) {
+    .navbar {
+        padding: 0 0 10px 20px;
+        min-height: 55px;
+        background-size: 250px 59px, 100% 100%;
+    }
+
+    .navbar-brand {
+        padding: 0;
+        height: 52px;
+        line-height: 52px;
+    }
+
+    .sidenav {
+        padding-top: 40px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 230px;
+        height: calc(100vh - 3.5rem);
+        margin-top: 3.9rem;
+        background-size: 100% 100%;
+        box-sizing: border-box;
+        /* border-right: 1px solid #996633; */
+        /* border-top: 2px solid gold; */
+    }
+
+    .navbar-expand-lg .sidenav {
+        flex-direction: column;
+    }
+
+    .content-wrapper {
+        margin-left: 230px;
+    }
+
+    /* .footer {
+    width: calc(100% - 230px);
+    margin-left: 230px;
+  } */
+}
+
+@font-face {
+    font-family: 'Helvet';
+    src: url('../resource/images/new/Font/Helvethaica_Med.ttf');
+}
+
+@font-face {
+    font-family: 'Helvet';
+    src: url('../resource/images/new/Font/Helvethaica_Bd.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'RSU';
+    src: url('../resource/images/new/Font/RSU_LIGHT.ttf');
+}
+
+@font-face {
+    font-family: 'RSU';
+    src: url('../resource/images/new/Font/RSU_BOLD.ttf');
+    font-weight: bold;
+}
+
+body {
+    background-size: cover;
+    /* background-position:center bottom; */
+    background-attachment: fixed;
+}
+
+.far:hover {
+    cursor: pointer;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    text-align: center;
+}
+
+a:link {
+    color: khaki;
+    text-decoration: none;
+}
+
+a:visited {
+    color: khaki;
+    text-decoration: none;
+}
+
+a:hover {
+    color: gold;
+    text-decoration: none;
+}
+
+a:active {
+    color: khaki;
+    text-decoration: none;
+}
+
+.menu {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 120%;
+    height: 32px;
+    margin-top: 10px;
+    padding-right: 1em;
+}
+
+.nav-tabs {
+    border-bottom: none !important;
+}
+
+    .nav-tabs .nav-link {
+        background-color: #333;
+    }
+
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+            color: gold;
+            background-color: #343a40;
+            border-color: #343a40 #343a40 #343a40;
+        }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    cursor: pointer;
+}
+
+#overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.sidenav > .menu {
+    border-bottom: 1px #888 solid;
+    padding-left: 15px;
+    padding-bottom: 7px;
+}
+
+#countryCode {
+    margin-right: 10px;
+}

@@ -1,0 +1,84 @@
+﻿body {
+    background-color: white !important;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, .2)
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555
+    }
+
+.left-side, .right-side {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.bordered-box {
+    border: 2px solid #FDA601;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.white-background {
+    background-color: white;
+}
+
+.name-formula {
+    font-family: 'Arial', san-serif;
+    font-size: 100%;
+    color: black;
+}
+
+.nav-link-formula {
+    color: black;
+    width: 130px;
+    height: 35px;
+    margin: auto;
+    border-radius: 100px;
+    cursor: pointer;
+    background: linear-gradient(0deg, rgba(206,206,206,1) 0%, rgba(253,253,253,1) 51%, rgba(206,206,206,1) 100%);
+}
+
+.nav-link-formula-active {
+    background: linear-gradient(0deg, rgba(241,208,0,1) 0%, rgba(237,249,4,1) 51%, rgba(241,208,0,1) 100%);
+}
+
+.item-formula {
+    margin: 10px 0;
+}
+
+.formula-div {
+    /*background-image: url('/image/side_bar.png');
+    background-repeat: no-repeat;
+    background-size: cover;*/
+    background: linear-gradient(0.5turn, rgb(0 0 0) 70%, rgb(69 16 62), rgb(38 25 32));
+}
+
+    .formula-div ul {
+        list-style: none;
+        padding: 0;
+    }
+
+.colhead {
+    font-size: 40px;
+}
+
+@media (max-width: 767px) {
+    .formula-div {
+        display: none;
+    }
+}
