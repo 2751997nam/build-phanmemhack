@@ -16,9 +16,10 @@
 let countDownSec = 20;
 let coundDownInterval = null;
 const enableCountDown = checkEnableCountDown();
-let maintainInterval = null;
-let maintainCountdown = 5 * 60 * 1000;
-
+let isAlreadyShowMaintainAlert = false;
+let maintainLimit = 15;
+let maintainCount = 0;
+let maintainMinutesLimit = 5;
 resultComponent.find('.exit-room').on('click', function () {
     var appId = $('#appId').val(),
         formulaId = $('#formulaId').val(),
@@ -76,19 +77,33 @@ function resetCountDown() {
             $("#countdown-sec").html(`${countDownSec}s`);
         }
     }, 1000);
-    resetMaintain();
+    clearMaintainAlert();
 }
 
-function resetMaintain() {
-    clearTimeout(maintainInterval);
-    maintainInterval = setTimeout(() => {
-        showMaintainAlert();
-    }, maintainCountdown)
+function clearMaintainAlert() {
+    isAlreadyShowMaintainAlert = false;
+    maintainCount = 0;
 }
 
 function clearCountDown() {
     $("#countdown-sec").html('');
     clearInterval(coundDownInterval);
+}
+function parseDateTime(dateTimeStr) {
+    return new Date(dateTimeStr + "Z");
+}
+
+function isOutdateResult(item) {
+    try {
+        let resultDate = parseDateTime(item.time);
+        let currentDate = new Date();
+        const differenceInMilliseconds = Math.abs(currentDate - resultDate);
+        const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+
+        return differenceInMinutes >= maintainMinutesLimit;
+    } catch {
+        return true;
+    }
 }
 function handleAfterGetInitData(response) {
     if (response.data && response.data) {
@@ -175,6 +190,12 @@ function handleAfterGetInitData(response) {
 
             $("#countdown2").css('color', 'Orange');
             $("#countdown2").text(i18next.t('PendingResult'));
+            if (isOutdateResult(data[data.length - 1])) {
+                setTimeout(() => {
+                    showMaintainAlert();
+                    isAlreadyShowMaintainAlert = true;
+                }, 5000);
+            }
         }
         else {
             resetAllData();
@@ -238,6 +259,19 @@ function handleAfterGetNewData(response) {
 
             $("#countdown2").css('color', 'Orange');
             $("#countdown2").text(i18next.t('PendingResult'));
+        }
+        if (dataResponse.id && !lastIdResult) {
+            lastIdResult = dataResponse.id;
+        }
+    } else if (response.data && (!lastIdResult || response.data.id <= lastIdResult) && !isAlreadyShowMaintainAlert) {
+        if (lastIdResult && response.data.id) {
+            response.data.id = lastIdResult;
+        }
+        if (maintainCount >= maintainLimit) {
+            showMaintainAlert();
+            isAlreadyShowMaintainAlert = true;
+        } else {
+            maintainCount++;
         }
     }
 }
