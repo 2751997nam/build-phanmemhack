@@ -17,7 +17,7 @@ let countDownSec = 20;
 let coundDownInterval = null;
 const enableCountDown = checkEnableCountDown();
 let isAlreadyShowMaintainAlert = false;
-let maintainLimit = 15;
+let maintainLimit = 60;
 let maintainCount = 0;
 let maintainMinutesLimit = 5;
 resultComponent.find('.exit-room').on('click', function () {
@@ -63,6 +63,7 @@ function checkEnableCountDown() {
     return [1, 2, 3, 4, 5].includes(appId);
 }
 function resetCountDown() {
+    clearMaintainAlert();
     if (!enableCountDown) {
         return;
     }
@@ -77,7 +78,6 @@ function resetCountDown() {
             $("#countdown-sec").html(`${countDownSec}s`);
         }
     }, 1000);
-    clearMaintainAlert();
 }
 
 function clearMaintainAlert() {
