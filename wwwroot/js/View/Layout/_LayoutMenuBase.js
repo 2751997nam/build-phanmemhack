@@ -30,6 +30,9 @@ function initLocalize() {
             zh: {
                 translation: translationZH,
             },
+            ko: {
+                translation: translationKR,
+            }
         },
     });
 }
