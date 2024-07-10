@@ -171,6 +171,7 @@ function showErrorAlert(title = i18next.t('Error'), text = i18next.t('AnErrorHas
 }
 
 function showMaintainAlert(title = i18next.t('Maintain'), text = i18next.t('TableMaintain'), customOption) {
+    return;
     var option = {
         icon: 'error',
         title: title,
@@ -187,10 +188,12 @@ function showMaintainAlert(title = i18next.t('Maintain'), text = i18next.t('Tabl
         }
         option = { ...option, ...customOption }
     }
-    Swal.fire(option).then(() => {
-        let ele = $('.exit-room');
-        if (ele.length) {
-            $(ele)[0].click();
+    Swal.fire(option).then((okay) => {
+        if (okay) {
+            let ele = $('.exit-room');
+            if (ele.length) {
+                $(ele)[0].click();
+            }
         }
     });
 }
