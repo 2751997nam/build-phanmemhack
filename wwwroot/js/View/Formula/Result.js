@@ -184,7 +184,7 @@ function handleAfterGetInitData(response) {
                     }
                 });
 
-                drawGraphLine();
+                drawGraphLine((data.length - 1) * 2 + 1);
 
                 // update tiếp thanh process
                 data.forEach(function (item, index) {
@@ -547,14 +547,17 @@ function handleBoardResult(isMatchPredict, resultValue) {
     }
 }
 
-function drawGraphLine() {
+function drawGraphLine(maxColumn = 0) {
     let graph = document.getElementById("graph_line");
     graph.innerHTML = '';
     let table = document.getElementById("graph_tbl");
     graph.style.width = table.clientWidth + 'px';
     let rows = table.rows.length;
     let columns = table.rows[0].cells.length;
-    for (let i = 3; i < columns; i += 2) {
+    if (!maxColumn) {
+        maxColumn = columns - 1;
+    }
+    for (let i = 3; i <= maxColumn; i += 2) {
         handleGraphLine(i);
     }
 }
@@ -644,6 +647,7 @@ function resetAllData(predictResult) {
 
     resultComponent.find('#graph_tbl tbody tr td').css('background-color', '');
     resultComponent.find('#graph_tbl tbody tr td:not(.origin)').empty();
+    document.getElementById("graph_line").innerHTML = '';
 
     resultComponent.find('.process-result .title-process span').text(0);
     resultComponent.find('.process-result .text-right .title-process').text(0);
@@ -662,7 +666,6 @@ function resetAllData(predictResult) {
 }
 
 function getNewDataResult() {
-    console.log('getNewDataResult');
     $("#countdown2").css('color', 'Orange');
     $("#countdown2").text(i18next.t('PendingResult'));
     callPostAPIAuthen('/Result/GetNewDataResult/',
