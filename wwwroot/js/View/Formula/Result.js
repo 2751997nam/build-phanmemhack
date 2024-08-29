@@ -8,7 +8,7 @@
     sumResultLose = 0,
     axisY = 25,
     axisLine = 25,
-    axisX = 1,
+    axisX = 0,
     appCode = resultComponent.find('#appCode').val(),
     roomCode = resultComponent.find('#roomCode').val(),
     userName = $($('.username')[0]).text(),
@@ -16,10 +16,7 @@
 let countDownSec = 20;
 let coundDownInterval = null;
 const enableCountDown = checkEnableCountDown();
-let isAlreadyShowMaintainAlert = false;
-let maintainLimit = 60;
-let maintainCount = 0;
-let maintainMinutesLimit = 5;
+
 resultComponent.find('.exit-room').on('click', function () {
     var appId = $('#appId').val(),
         formulaId = $('#formulaId').val(),
@@ -63,7 +60,6 @@ function checkEnableCountDown() {
     return [1, 2, 3, 4, 5].includes(appId);
 }
 function resetCountDown() {
-    clearMaintainAlert();
     if (!enableCountDown) {
         return;
     }
@@ -80,30 +76,9 @@ function resetCountDown() {
     }, 1000);
 }
 
-function clearMaintainAlert() {
-    isAlreadyShowMaintainAlert = false;
-    maintainCount = 0;
-}
-
 function clearCountDown() {
     $("#countdown-sec").html('');
     clearInterval(coundDownInterval);
-}
-function parseDateTime(dateTimeStr) {
-    return new Date(dateTimeStr + "Z");
-}
-
-function isOutdateResult(item) {
-    try {
-        let resultDate = parseDateTime(item.time);
-        let currentDate = new Date();
-        const differenceInMilliseconds = Math.abs(currentDate - resultDate);
-        const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
-
-        return differenceInMinutes >= maintainMinutesLimit;
-    } catch {
-        return true;
-    }
 }
 function handleAfterGetInitData(response) {
     if (response.data && response.data) {
@@ -190,12 +165,6 @@ function handleAfterGetInitData(response) {
 
             $("#countdown2").css('color', 'Orange');
             $("#countdown2").text(i18next.t('PendingResult'));
-            if (isOutdateResult(data[data.length - 1])) {
-                setTimeout(() => {
-                    showMaintainAlert();
-                    isAlreadyShowMaintainAlert = true;
-                }, 5000);
-            }
         }
         else {
             resetAllData();
@@ -259,19 +228,6 @@ function handleAfterGetNewData(response) {
 
             $("#countdown2").css('color', 'Orange');
             $("#countdown2").text(i18next.t('PendingResult'));
-        }
-        if (dataResponse.id && !lastIdResult) {
-            lastIdResult = dataResponse.id;
-        }
-    } else if (response.data && (!lastIdResult || response.data.id <= lastIdResult) && !isAlreadyShowMaintainAlert) {
-        if (lastIdResult && response.data.id) {
-            response.data.id = lastIdResult;
-        }
-        if (maintainCount >= maintainLimit) {
-            showMaintainAlert();
-            isAlreadyShowMaintainAlert = true;
-        } else {
-            maintainCount++;
         }
     }
 }
@@ -448,16 +404,9 @@ function genHtmlTableTBLStack(lose, isWin, loopIndex) {
     return htmlTr;
 }
 
-function randomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; 
-}
-
 function handleBoardResult(isMatchPredict, resultValue) {
     let colorBoard = "";
-    let height = 1;
-    let operator = 'sumb';
+
     if (resultValue == 't' && appCode.indexOf('bcr') > 0) {
         // nếu kq là T thì gán luôn màu
         colorBoard = "rgb(40, 167, 69)";
@@ -467,68 +416,56 @@ function handleBoardResult(isMatchPredict, resultValue) {
         if (axisY == axisLine) {
             axisY--;
         }
-        colorBoard = "rgb(255 229 0)";
-        height = randomInt(3, 6);
-        operator = 'sub';
+        colorBoard = "rgb(204, 255, 0)";
     }
     else {
         axisY++;
         if (axisY == axisLine) {
             axisY++;
         }
-        colorBoard = "#ff00cc";
-        height = randomInt(3, 6);
+        colorBoard = "red";
     }
 
     let axisYCurrent = axisY;
 
     // xử lý mở rộng chiều rộng chiều dài đồ thị nếu bị tràn
-    if (!document.getElementById("graph_tbl").rows[axisY + height]) {
-        for (let row = 0; row < height; row++) {
-            // count td của dòng dầu
-            let countTd = resultComponent.find("#graph_tbl tbody tr:first-child td").length,
-                htmlTr = '';
-            for (var i = 0; i < countTd; i++) {
-                htmlTr += '<td></td>'
-            }
-            if (htmlTr) {
-                htmlTr = `<tr>${htmlTr}</tr>`;
-                if (axisY < axisLine) {
-                    resultComponent.find("#graph_tbl tbody").prepend(htmlTr);
-                }
-                else {
-                    resultComponent.find("#graph_tbl tbody").append(htmlTr);
-                }
-            }
-            if (axisY <= 0) {
-                axisY = 0;
-                axisYCurrent = 0;
+    if (!document.getElementById("graph_tbl").rows[axisY]) {
+        // count td của dòng dầu
+        let countTd = resultComponent.find("#graph_tbl tbody tr:first-child td").length,
+            htmlTr = '';
+        for (var i = 0; i < countTd; i++) {
+            htmlTr += '<td></td>'
+        }
+        if (htmlTr) {
+            htmlTr = `<tr>${htmlTr}</tr>`;
+            if (axisY < axisLine) {
+                resultComponent.find("#graph_tbl tbody").prepend(htmlTr);
             }
             else {
-                axisYCurrent = axisY - 1;
+                resultComponent.find("#graph_tbl tbody").append(htmlTr);
             }
         }
-
+        if (axisY <= 0) {
+            axisY = 0;
+            axisYCurrent = 0;
+        }
+        else {
+            axisYCurrent = axisY - 1;
+        }
     }
 
     if (document.getElementById("graph_tbl").rows[axisYCurrent] && !document.getElementById("graph_tbl").rows[axisYCurrent].cells[axisX]) {
         // nếu axistX hết thì tăng bên phải
         // quét từng tr rồi thêm 1 td
-        let trListElement = resultComponent.find("#graph_tbl tbody tr");
-        let addNumbers = axisX - ($(trListElement[0]).find('td').length - 1);
+        let trListElement = resultComponent.find("#graph_tbl tbody tr")
         for (var i = 0; i < trListElement.length; i++) {
-            for (let j = 0; j < addNumbers; j++) {
-                $(resultComponent.find("#graph_tbl tbody tr")[i]).append('<td></td>')
-            }
+            $(resultComponent.find("#graph_tbl tbody tr")[i]).append('<td></td>')
         }
     }
 
     if (colorBoard && document.getElementById("graph_tbl").rows[axisYCurrent]) {
-        for (let i = 0; i <= height; i++) {
-            let currentY = operator == 'sumb' ? axisYCurrent + i : axisYCurrent - i;
-            document.getElementById("graph_tbl").rows[currentY].cells[axisX].style.backgroundColor = colorBoard;
-        }
-        axisX += 2;
+        document.getElementById("graph_tbl").rows[axisYCurrent].cells[axisX].style.backgroundColor = colorBoard;
+        axisX++;
     }
 }
 
