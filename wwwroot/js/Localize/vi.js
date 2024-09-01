@@ -77,6 +77,4 @@
     "SomeRecordExisted": "Thêm một phần thành công, một số bản ghi đã tồn tại",
     "InsertAll": "Thêm tất cả bản ghi thành công",
     "FileEmpty": "File trống hoặc sai định dạng",
-    "Maintain": "Bảo trì",
-    "TableMaintain": "Bàn đang bảo trì"
 }

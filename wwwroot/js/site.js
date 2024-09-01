@@ -170,31 +170,6 @@ function showErrorAlert(title = i18next.t('Error'), text = i18next.t('AnErrorHas
     Swal.fire(option);
 }
 
-function showMaintainAlert(title = i18next.t('Maintain'), text = i18next.t('TableMaintain'), customOption) {
-    var option = {
-        icon: 'error',
-        title: title,
-        text: text,
-        timer: 0,
-        showCancelButton: false,
-        //showConfirmButton: false,
-        allowOutsideClick: false,
-        type: 'warning'
-    }
-    if (customOption && typeof customOption == 'object') {
-        if (customOption.timer) {
-            delete option.timer;
-        }
-        option = { ...option, ...customOption }
-    }
-    Swal.fire(option).then(() => {
-        let ele = $('.exit-room');
-        if (ele.length) {
-            $(ele)[0].click();
-        }
-    });
-}
-
 function showWarningAlert(title = i18next.t('Warning'), text = i18next.t('Pleasenote'), customOption) {
     var option = {
         icon: 'warning',
