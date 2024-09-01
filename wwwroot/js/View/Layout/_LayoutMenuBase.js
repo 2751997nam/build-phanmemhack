@@ -30,6 +30,9 @@ function initLocalize() {
             zh: {
                 translation: translationZH,
             },
+            ko: {
+                translation: translationKR,
+            }
         },
     });
 }
@@ -41,7 +44,4 @@ function updateCoin(coin) {
 
 $(document).ready(function () {
     initLocalize();
-    //window.console.log = function () { };
-    window.console.warn = function () { };
-    window.console.error = function () { };
 })

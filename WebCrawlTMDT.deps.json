@@ -311,6 +311,9 @@
           "en-US/WebCrawlTMDT.resources.dll": {
             "locale": "en-US"
           },
+          "ko-KR/WebCrawlTMDT.resources.dll": {
+            "locale": "ko-KR"
+          },
           "th-TH/WebCrawlTMDT.resources.dll": {
             "locale": "th-TH"
           },

@@ -8,7 +8,8 @@
     sumResultLose = 0,
     axisY = 25,
     axisLine = 25,
-    axisX = 0,
+    axisX = 1,
+    axisCenterY = 26,
     appCode = resultComponent.find('#appCode').val(),
     roomCode = resultComponent.find('#roomCode').val(),
     userName = $($('.username')[0]).text(),
@@ -16,6 +17,11 @@
 let countDownSec = 20;
 let coundDownInterval = null;
 const enableCountDown = checkEnableCountDown();
+let isAlreadyShowMaintainAlert = false;
+let maintainLimit = 60;
+let maintainCount = 0;
+let maintainMinutesLimit = 5;
+document.querySelector('.div-graph_tbl').insertAdjacentHTML('beforeend', `<div id="graph_line"></div>`)
 
 resultComponent.find('.exit-room').on('click', function () {
     var appId = $('#appId').val(),
@@ -60,6 +66,7 @@ function checkEnableCountDown() {
     return [1, 2, 3, 4, 5].includes(appId);
 }
 function resetCountDown() {
+    clearMaintainAlert();
     if (!enableCountDown) {
         return;
     }
@@ -76,9 +83,30 @@ function resetCountDown() {
     }, 1000);
 }
 
+function clearMaintainAlert() {
+    isAlreadyShowMaintainAlert = false;
+    maintainCount = 0;
+}
+
 function clearCountDown() {
     $("#countdown-sec").html('');
     clearInterval(coundDownInterval);
+}
+function parseDateTime(dateTimeStr) {
+    return new Date(dateTimeStr + "Z");
+}
+
+function isOutdateResult(item) {
+    try {
+        let resultDate = parseDateTime(item.time);
+        let currentDate = new Date();
+        const differenceInMilliseconds = Math.abs(currentDate - resultDate);
+        const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+
+        return differenceInMinutes >= maintainMinutesLimit;
+    } catch {
+        return true;
+    }
 }
 function handleAfterGetInitData(response) {
     if (response.data && response.data) {
@@ -156,6 +184,8 @@ function handleAfterGetInitData(response) {
                     }
                 });
 
+                drawGraphLine((data.length - 1) * 2 + 1);
+
                 // update tiếp thanh process
                 data.forEach(function (item, index) {
                     // update từng dòng kq
@@ -165,6 +195,12 @@ function handleAfterGetInitData(response) {
 
             $("#countdown2").css('color', 'Orange');
             $("#countdown2").text(i18next.t('PendingResult'));
+            if (isOutdateResult(data[data.length - 1])) {
+                setTimeout(() => {
+                    showMaintainAlert();
+                    isAlreadyShowMaintainAlert = true;
+                }, 5000);
+            }
         }
         else {
             resetAllData();
@@ -216,7 +252,11 @@ function handleAfterGetNewData(response) {
                 }
 
                 //xử lý đồ thị
+                let currentX = axisX;
                 handleBoardResult(dataResponse.isMatchPredict, dataResponse.resultValue);
+                if (currentX > 1) {
+                    handleGraphLine(currentX);
+                }
 
                 // update lại coin
                 updateCoin(response.data.coinAcc);
@@ -228,6 +268,19 @@ function handleAfterGetNewData(response) {
 
             $("#countdown2").css('color', 'Orange');
             $("#countdown2").text(i18next.t('PendingResult'));
+        }
+        if (dataResponse.id && !lastIdResult) {
+            lastIdResult = dataResponse.id;
+        }
+    } else if (response.data && (!lastIdResult || response.data.id <= lastIdResult) && !isAlreadyShowMaintainAlert) {
+        if (lastIdResult && response.data.id) {
+            response.data.id = lastIdResult;
+        }
+        if (maintainCount >= maintainLimit) {
+            showMaintainAlert();
+            isAlreadyShowMaintainAlert = true;
+        } else {
+            maintainCount++;
         }
     }
 }
@@ -404,69 +457,164 @@ function genHtmlTableTBLStack(lose, isWin, loopIndex) {
     return htmlTr;
 }
 
+function randomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; 
+}
+
 function handleBoardResult(isMatchPredict, resultValue) {
     let colorBoard = "";
-
+    let height = 4;
+    let operator = 'sumb';
     if (resultValue == 't' && appCode.indexOf('bcr') > 0) {
         // nếu kq là T thì gán luôn màu
         colorBoard = "rgb(40, 167, 69)";
+        axisCenterY = axisY + 1;
     }
     else if (isMatchPredict) {
         axisY--;
         if (axisY == axisLine) {
             axisY--;
         }
-        colorBoard = "rgb(204, 255, 0)";
+        axisCenterY = axisY - 1;
+        colorBoard = "rgb(255 229 0)";
+        // height = randomInt(3, 6);
+        operator = 'sub';
     }
     else {
         axisY++;
         if (axisY == axisLine) {
             axisY++;
         }
-        colorBoard = "red";
+        axisCenterY = axisY + 1;
+        colorBoard = "#ff00cc";
+        // height = randomInt(3, 6);
     }
 
     let axisYCurrent = axisY;
 
     // xử lý mở rộng chiều rộng chiều dài đồ thị nếu bị tràn
-    if (!document.getElementById("graph_tbl").rows[axisY]) {
-        // count td của dòng dầu
-        let countTd = resultComponent.find("#graph_tbl tbody tr:first-child td").length,
-            htmlTr = '';
-        for (var i = 0; i < countTd; i++) {
-            htmlTr += '<td></td>'
-        }
-        if (htmlTr) {
-            htmlTr = `<tr>${htmlTr}</tr>`;
-            if (axisY < axisLine) {
-                resultComponent.find("#graph_tbl tbody").prepend(htmlTr);
+    if (!document.getElementById("graph_tbl").rows[axisY + height]) {
+        for (let row = 0; row < height; row++) {
+            // count td của dòng dầu
+            let countTd = resultComponent.find("#graph_tbl tbody tr:first-child td").length,
+                htmlTr = '';
+            for (var i = 0; i < countTd; i++) {
+                htmlTr += '<td class="origin"></td>'
+            }
+            if (htmlTr) {
+                htmlTr = `<tr>${htmlTr}</tr>`;
+                if (axisY < axisLine) {
+                    resultComponent.find("#graph_tbl tbody").prepend(htmlTr);
+                }
+                else {
+                    resultComponent.find("#graph_tbl tbody").append(htmlTr);
+                }
+            }
+            if (axisY <= 0) {
+                axisY = 0;
+                axisYCurrent = 0;
             }
             else {
-                resultComponent.find("#graph_tbl tbody").append(htmlTr);
+                axisYCurrent = axisY - 1;
             }
         }
-        if (axisY <= 0) {
-            axisY = 0;
-            axisYCurrent = 0;
-        }
-        else {
-            axisYCurrent = axisY - 1;
-        }
+
     }
 
     if (document.getElementById("graph_tbl").rows[axisYCurrent] && !document.getElementById("graph_tbl").rows[axisYCurrent].cells[axisX]) {
         // nếu axistX hết thì tăng bên phải
         // quét từng tr rồi thêm 1 td
-        let trListElement = resultComponent.find("#graph_tbl tbody tr")
+        let trListElement = resultComponent.find("#graph_tbl tbody tr");
+        let addNumbers = axisX - ($(trListElement[0]).find('td').length - 1);
         for (var i = 0; i < trListElement.length; i++) {
-            $(resultComponent.find("#graph_tbl tbody tr")[i]).append('<td></td>')
+            for (let j = 0; j < addNumbers; j++) {
+                $(resultComponent.find("#graph_tbl tbody tr")[i]).append('<td class="origin"></td>')
+            }
         }
     }
 
     if (colorBoard && document.getElementById("graph_tbl").rows[axisYCurrent]) {
-        document.getElementById("graph_tbl").rows[axisYCurrent].cells[axisX].style.backgroundColor = colorBoard;
-        axisX++;
+        for (let i = 0; i <= height; i++) {
+            let currentY = operator == 'sumb' ? axisYCurrent + i : axisYCurrent - i;
+            document.getElementById("graph_tbl").rows[currentY].cells[axisX].style.backgroundColor = colorBoard;
+            if (i == parseInt(height / 2)) {
+                document.getElementById("graph_tbl").rows[currentY].cells[axisX].classList.add('center-point');
+            }
+        }
+        axisX += 2;
     }
+}
+
+function drawGraphLine(maxColumn = 0) {
+    let graph = document.getElementById("graph_line");
+    graph.innerHTML = '';
+    let table = document.getElementById("graph_tbl");
+    graph.style.width = table.clientWidth + 'px';
+    let rows = table.rows.length;
+    let columns = table.rows[0].cells.length;
+    if (!maxColumn) {
+        maxColumn = columns - 1;
+    }
+    for (let i = 3; i <= maxColumn; i += 2) {
+        handleGraphLine(i);
+    }
+}
+
+function handleGraphLine(currentX) {
+    let prevColumn = document.querySelectorAll(`td.origin:nth-child(${currentX - 1})`);
+    let currentColumn = document.querySelectorAll(`td.origin:nth-child(${currentX + 1})`);
+
+    let prevX = currentX - 2;
+    let prevY = null;
+    prevColumn.forEach((element, index) => {
+        if (element.classList.contains('center-point')) {
+            prevY = index;
+        }
+    })
+    let currentY = null;
+    currentColumn.forEach((element, index) => {
+        if (element.classList.contains('center-point')) {
+            currentY = index;
+        }
+    })
+
+    let unitX = currentColumn[0].getBoundingClientRect().width;
+    let unitY = currentColumn[0].getBoundingClientRect().height;
+    let startCellPos = {
+        x: (prevX + 0.5) * unitX,
+        y: prevY * unitY
+    }
+    let endCellPos = {
+        x: (currentX + 0.5) * unitX,
+        y: currentY * unitY
+    }
+
+    let curve = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    curve.setAttribute("width", "100%");
+    curve.setAttribute("height", "100%");
+    curve.setAttribute("class", "drawn-curve");
+    curve.setAttribute("pointer-events","none");
+    curve.setAttribute("data-start-x", prevX);
+    curve.setAttribute("data-start-y", prevY);
+    curve.setAttribute("data-end-x", currentX);
+    curve.setAttribute("data-end-y", currentY);
+    curve.style.position = "absolute";
+    curve.style.top = "0";
+    curve.style.left = "0";
+
+    let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M " + startCellPos.x + " " + startCellPos.y + " Q " + (startCellPos.x + endCellPos.x) / 2 + " " + startCellPos.y + " " + endCellPos.x + " " + endCellPos.y);
+    path.setAttribute("stroke", "yellow");
+    path.setAttribute("stroke-width", "2");
+    path.setAttribute("fill", "none");
+
+    curve.appendChild(path);
+
+    let table = document.getElementById("graph_line");
+
+    table.appendChild(curve);
 }
 
 function handleErrorData(response) {
@@ -499,6 +647,7 @@ function resetAllData(predictResult) {
 
     resultComponent.find('#graph_tbl tbody tr td').css('background-color', '');
     resultComponent.find('#graph_tbl tbody tr td:not(.origin)').empty();
+    document.getElementById("graph_line").innerHTML = '';
 
     resultComponent.find('.process-result .title-process span').text(0);
     resultComponent.find('.process-result .text-right .title-process').text(0);
@@ -517,7 +666,6 @@ function resetAllData(predictResult) {
 }
 
 function getNewDataResult() {
-    console.log('getNewDataResult');
     $("#countdown2").css('color', 'Orange');
     $("#countdown2").text(i18next.t('PendingResult'));
     callPostAPIAuthen('/Result/GetNewDataResult/',
