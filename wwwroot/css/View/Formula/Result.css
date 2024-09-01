@@ -160,34 +160,28 @@
     border-radius: 10px;
 }
 
-#graph_line {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-}
+    .graph-result .div-graph_tbl {
+        overflow-x: auto;
+        overflow: auto;
+        height: 330px;
+        display: flex;
+        justify-content: center;
+    }
 
-.graph-result .div-graph_tbl {
-    height: 330px;
-    position: relative;
-    overflow-x: auto;
-}
+    .graph-result #graph_tbl {
+        table-layout: fixed;
+        padding: 0;
+        width: 80%;
+    }
 
-.graph-result #graph_tbl {
-    table-layout: fixed;
-    padding: 0;
-    width: 100%;
-}
+        .graph-result #graph_tbl tr:not(.line-compare) td {
+            width: 4px;
+            height: 5px;
+        }
 
-.graph-result #graph_tbl tr:not(.line-compare) td {
-    width: 4px;
-    height: 5px;
-}
-
-.graph-result #graph_tbl tr.line-compare td {
-    border-top: 1px solid #ff0033;
-}
+        .graph-result #graph_tbl tr.line-compare td {
+            border-top: 1px solid #ff0033;
+        }
 
 .process-result {
     background-image: url(/image/FrameC.png);
