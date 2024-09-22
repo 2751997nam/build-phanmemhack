@@ -187,10 +187,12 @@ function showMaintainAlert(title = i18next.t('Maintain'), text = i18next.t('Tabl
         }
         option = { ...option, ...customOption }
     }
-    Swal.fire(option).then(() => {
-        let ele = $('.exit-room');
-        if (ele.length) {
-            $(ele)[0].click();
+    Swal.fire(option).then((okay) => {
+        if (okay) {
+            let ele = $('.exit-room');
+            if (ele.length) {
+                $(ele)[0].click();
+            }
         }
     });
 }

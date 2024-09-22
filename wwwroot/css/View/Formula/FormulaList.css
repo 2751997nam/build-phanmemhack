@@ -28,7 +28,7 @@
 }
 
 .bordered-box {
-    border: 2px solid #FDA601;
+    border: 2px solid #ffffff;
     border-radius: 10px;
     width: 100%;
 }
@@ -43,6 +43,10 @@
     color: black;
 }
 
+.nav-link-formula-active .name-formula {
+    color: #fff;
+}
+
 .nav-link-formula {
     color: black;
     width: 130px;
@@ -54,7 +58,7 @@
 }
 
 .nav-link-formula-active {
-    background: linear-gradient(0deg, rgba(241,208,0,1) 0%, rgba(237,249,4,1) 51%, rgba(241,208,0,1) 100%);
+    background: linear-gradient(0deg, #320105 0%, #c10602 51%, #dc0500 100%);
 }
 
 .item-formula {

@@ -100,7 +100,7 @@
 .nav-item .nav-link {
     font-size: 15px;
     padding: .5rem !important;
-    color: #fff;
+    color: #fff !important;
 }
 
 
@@ -207,7 +207,7 @@ body {
 
 .modal-content {
     background-color: rgba(0, 0, 0, 0.9) !important;
-    border: 3px solid green !important;
+    border: 3px solid #c10602 !important;
 }
 
 @media screen and (max-width:991px) {
@@ -254,6 +254,7 @@ body {
 .color-blue {
     color: blue
 }
+
 .yellow-color {
     color: khaki
 }
@@ -266,4 +267,10 @@ body {
     #small-screen {
         padding: 2% !important;
     }
+}
+
+.btn-primary {
+    color: #fff !important;
+    background-color: #000101 !important;
+    border-color: #fff !important;
 }

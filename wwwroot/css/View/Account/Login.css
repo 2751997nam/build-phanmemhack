@@ -2,7 +2,7 @@
     padding: 5% 12% 7% 9%;
     background: rgba(17, 17, 17, 0.6);
     border-radius: 5px;
-    background: linear-gradient(0.25turn, rgb(0 105 152), rgb(88 159 179), rgb(1 110 151));
+    background: linear-gradient(0.5turn, #c10602, #c10602, #320105);
 }
 /*body {*/
     /*background: linear-gradient(164deg, rgb(0 105 152), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgb(2 153 195), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgb(1 110 151), rgba(0,0,255,0) 70.71%);*/
@@ -127,6 +127,5 @@ a:active {
 
 .button-login-form button {
     background: #000101;
-    background-image: linear-gradient( rgba(1,4,3,1), rgba(11,45,39,16) );
     line-height: 30px;
 }
