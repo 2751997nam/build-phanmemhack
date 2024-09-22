@@ -2,6 +2,7 @@
 
 body {
     background-image: url(/image/baccarat_bg.png);
+    background-size: cover;
 }
 body {
     font-family: 'Roboto', sans-serif;
