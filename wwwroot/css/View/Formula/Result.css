@@ -158,14 +158,9 @@
 }
 
 .graph-result {
-    background: rgb(0, 0, 5);
+    background: rgb(0,0,5);
     /*background: linear-gradient(156deg, rgba(0,0,5,1) 0%, rgba(74,74,74,1) 51%, rgba(0,0,5,1) 100%);*/
-    background: linear-gradient(
-        0.5turn,
-        rgb(4 71 105),
-        rgb(7 57 84),
-        rgb(51 33 43)
-    );
+    background: linear-gradient(0.5turn, rgb(4 71 105), rgb(7 57 84), rgb(51 33 43));
     border: 3px solid #41113b;
     border-radius: 10px;
 }
@@ -185,12 +180,13 @@
     }
 
         .graph-result #graph_tbl tr:not(.line-compare) td {
-            width: 4px;
-            height: 5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            width: 7px;
+            height: 7px;
         }
 
         .graph-result #graph_tbl tr.line-compare td {
-            border-top: 1px solid #ff0033;
+            background-color: #ff0033;
         }
 
 .process-result {
