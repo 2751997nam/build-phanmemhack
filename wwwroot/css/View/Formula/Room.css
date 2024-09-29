@@ -44,6 +44,8 @@
     display: flex;
     width: 500px;
     height: 270px;
+    background: rgb(0, 0, 5);
+    background: linear-gradient(156deg, rgba(0, 0, 5, 1) 0%, rgba(74, 74, 74, 1) 51%, rgba(0, 0, 5, 1) 100%);
     padding: 20px 30px;
     border-radius: 10px;
     gap: 30px;
@@ -112,9 +114,8 @@
 
 .room {
     position: relative;
-    border: #ffffff 3px solid;
+    border: #41113b 5px solid;
     border-radius: 10px;
-    background: linear-gradient(180deg, #c10602 0%, #c10602 40%, #320105 100%);
 }
 
 .room-list {

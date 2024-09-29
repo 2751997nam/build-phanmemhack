@@ -14,7 +14,7 @@ body {
 }
 
 .navbar {
-    background: linear-gradient(0.5turn, #c10602, #320105, #320105);
+    background: linear-gradient(0.25turn, rgb(0 105 152), rgb(88 159 179), rgb(1 110 151));
 }
 
 i {

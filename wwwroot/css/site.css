@@ -100,7 +100,7 @@
 .nav-item .nav-link {
     font-size: 15px;
     padding: .5rem !important;
-    color: #fff !important;
+    color: #fff;
 }
 
 
