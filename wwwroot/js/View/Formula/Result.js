@@ -374,7 +374,7 @@ function handlePredict(resultValue) {
             htmlPredict = `<div class="flex justify-content-center"><div class="result-val result-val-${resultValue}"><span>${resultValue.toUpperCase()}</span></div></div>`;
             break;
         default:
-            htmlPredict = "Analyzing..";
+            window.location.reload();
             break;
     }
 
