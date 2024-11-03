@@ -170,7 +170,7 @@
         overflow: auto;
         height: 330px;
         display: flex;
-        justify-content: center;
+        justify-content: start;
     }
 
     .graph-result #graph_tbl {
