@@ -375,6 +375,9 @@ function handlePredict(resultValue) {
             break;
         default:
             htmlPredict = "Analyzing..";
+            setTimeout(() => {
+                window.location.reload(); 
+            }, 2000); // 2s
             break;
     }
 
