@@ -1,0 +1,40 @@
+﻿.btn-outline-success {
+    color: #28a745 !important;
+    background-color: unset !important;
+}
+
+    .btn-outline-success:hover {
+        color: #fff !important;
+        background-color: #28a745 !important;
+        border-color: #28a745 !important;
+    }
+
+.toggle-on {
+    width: 90px;
+    padding-left: 1px;
+}
+
+.page-index {
+    display: flex;
+}
+
+.pageSelected {
+    border: 1px solid #e0e0e0;
+    font-weight: 700;
+}
+
+.disableText {
+    cursor: default !important;
+    color: #9e9e9e;
+}
+
+.unselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
