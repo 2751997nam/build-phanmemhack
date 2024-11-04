@@ -1,0 +1,108 @@
+﻿body {
+    background: black;
+    color: white;
+    font-family: 'Google Sans';
+    display: block;
+    position: relative;
+    transition: background-color .5s;
+}
+
+    body:after {
+        content: "";
+        background-image: url('/image/background-img.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.25;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+    }
+
+nav {
+    padding: 1% 9% !important;
+}
+
+    nav a {
+        color: white !important;
+    }
+
+        nav a:hover {
+            text-decoration: none;
+        }
+
+.modal-content {
+    background-color: rgba(0,0,0,0.9) !important;
+    border: 3px solid green !important;
+}
+
+main {
+    background-color: #2d2d2d;
+    color: white;
+    font-family: Raleway, sans-serif;
+}
+
+#upper-section a {
+    color: #adaaaa !important;
+}
+
+    #upper-section a:hover {
+        color: #ff621d !important;
+        text-decoration: none;
+    }
+
+.question-div {
+    display: flex;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+.question-answer-block {
+    margin-left: 5%;
+}
+
+.question {
+    font-size: x-large;
+    color: #1e73be;
+    text-transform: uppercase;
+}
+
+    .question:hover {
+        cursor: pointer;
+        color: #daa520;
+    }
+
+.question-btn {
+    width: 45px;
+    height: 45px;
+}
+
+.credit-buttons > button {
+    color: white;
+    background-color: #CD992D;
+}
+
+button > a:hover {
+    text-decoration: none !important;
+}
+
+h3 > a:hover {
+    text-decoration: none !important;
+}
+
+.plus-btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 5%;
+}
+
+.minus-btn {
+    color: black;
+    background-color: white;
+}

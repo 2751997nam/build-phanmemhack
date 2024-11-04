@@ -1,0 +1,132 @@
+﻿.center-box {
+    padding: 5% 12% 7% 9%;
+    background: rgba(17, 17, 17, 0.6);
+    border-radius: 5px;
+    background: linear-gradient(0.25turn, rgb(0 105 152), rgb(88 159 179), rgb(1 110 151));
+}
+/*body {*/
+    /*background: linear-gradient(164deg, rgb(0 105 152), rgba(255,0,0,0) 70.71%), linear-gradient(127deg, rgb(2 153 195), rgba(0,255,0,0) 70.71%), linear-gradient(336deg, rgb(1 110 151), rgba(0,0,255,0) 70.71%);*/
+    /*background: linear-gradient(0.25turn, rgb(0 105 152), rgb(2 153 195), rgb(1 110 151));
+}*/
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 3px solid green;
+}
+
+.responsive {
+    width: 100%;
+    height: auto;
+}
+
+.bgimage1 {
+    width: 350px;
+    position: absolute;
+    bottom: -5%;
+    left: 5%;
+    z-index: -99;
+}
+
+.bgimage2 {
+    width: 350px;
+    position: absolute;
+    bottom: -12%;
+    right: 5%;
+    z-index: -99;
+}
+
+.logheader {
+    font-family: 'Helvet';
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 1em;
+}
+
+.btnimg {
+    height: 65px;
+}
+
+@media only screen and (max-width: 600px) {
+    .center-box {
+        padding: 5% 10% 7% 10%;
+    }
+
+    .bgimage2 {
+        width: 150px;
+    }
+
+    .loginimg {
+        width: 30%;
+    }
+
+    .logheader {
+        margin-bottom: 0;
+    }
+
+    .btnimg {
+        height: 50px;
+    }
+}
+
+html, body {
+    min-height: 100%;
+}
+
+.bg_body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+}
+
+.div-center {
+    width: 600px;
+    height: auto;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    padding: 5%;
+    text-align: center;
+    /* border: 3px solid #cc9933; */
+    /* background: rgba(0, 0, 0, 0.3); */
+}
+
+@media only screen and (min-width: 700px) {
+    .div-center {
+        height: auto;
+    }
+}
+
+a:link {
+    color: Khaki;
+    text-decoration: none;
+}
+
+a:visited {
+    color: Khaki;
+    text-decoration: none;
+}
+
+a:hover {
+    color: Khaki;
+    text-decoration: none;
+}
+
+a:active {
+    color: Khaki;
+    text-decoration: none;
+}
+
+.button-login-form button {
+    background: #000101;
+    background-image: linear-gradient( rgba(1,4,3,1), rgba(11,45,39,16) );
+    line-height: 30px;
+}
